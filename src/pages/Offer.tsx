@@ -1,41 +1,48 @@
+import { useParams } from 'react-router-dom';
+import { OffersArrayType } from '../types/offer';
+import { ReviewsArrayType } from '../types/review';
 
+type OfferProps = {
+  offers: OffersArrayType;
+  reviews: ReviewsArrayType;
+};
 
-function Offer (): JSX.Element {
+function Offer ({offers, reviews}: OfferProps): JSX.Element {
+
+  const params = useParams();
+  const cardId = Number(params.id);
+
+  const selectedCard = offers.filter((item) => item.id === cardId)[0];
+
+  // const isFavoriteActive = `place-card__bookmark-button button ${selectedCard.isFavorite ? 'place-card__bookmark-button--active' : ''}`
+
+  const selectedCardReviews = reviews.filter((item) => item.id === cardId);
+
   return (
     <main className="page__main page__main--offer">
+
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/room.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-            </div>
+              {selectedCard.images.slice(0, 6).map((img) => (
+                <div key={img} className='offer__image-wrapper'>
+                  <img className='offer__image' src={img} alt='Photo studio' />
+                </div>
+              ))}
           </div>
         </div>
         <div className="offer__container container">
           <div className="offer__wrapper">
-            <div className="offer__mark">
-              <span>Premium</span>
+            {selectedCard.isPremium && <div className="offer__mark">
+                <span>Premium</span>
             </div>
+            }
+
             <div className="offer__name-wrapper">
               <h1 className="offer__name">
-                Beautiful &amp; luxurious studio at great location
+                {selectedCard.title}
               </h1>
-              <button className="offer__bookmark-button button" type="button">
+              <button className='place-card__bookmark-button button' type="button">
                 <svg className="offer__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
                 </svg>
@@ -47,56 +54,33 @@ function Offer (): JSX.Element {
                 <span style={{width: '80%'}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="offer__rating-value rating__value">4.8</span>
+              <span className="offer__rating-value rating__value">{selectedCard.rating}</span>
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                Apartment
+                {selectedCard.type}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
-                3 Bedrooms
+              {selectedCard.bedrooms} Bedrooms
               </li>
               <li className="offer__feature offer__feature--adults">
-                Max 4 adults
+                Max {selectedCard.maxAdults} adults
               </li>
             </ul>
             <div className="offer__price">
-              <b className="offer__price-value">&euro;120</b>
+              <b className="offer__price-value">&euro;{selectedCard.price}</b>
               <span className="offer__price-text">&nbsp;night</span>
             </div>
             <div className="offer__inside">
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
-                <li className="offer__inside-item">
-                  Wi-Fi
-                </li>
-                <li className="offer__inside-item">
-                  Washing machine
-                </li>
-                <li className="offer__inside-item">
-                  Towels
-                </li>
-                <li className="offer__inside-item">
-                  Heating
-                </li>
-                <li className="offer__inside-item">
-                  Coffee machine
-                </li>
-                <li className="offer__inside-item">
-                  Baby seat
-                </li>
-                <li className="offer__inside-item">
-                  Kitchen
-                </li>
-                <li className="offer__inside-item">
-                  Dishwasher
-                </li>
-                <li className="offer__inside-item">
-                  Cabel TV
-                </li>
-                <li className="offer__inside-item">
-                  Fridge
-                </li>
+                {
+                  selectedCard.goods.map((item) => (
+                    <li className="offer__inside-item" key={item}>
+                      {item}
+                    </li>
+                  ))
+                }
               </ul>
             </div>
             <div className="offer__host">
@@ -106,46 +90,50 @@ function Offer (): JSX.Element {
                   <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
                 </div>
                 <span className="offer__user-name">
-                  Angelina
+                  {selectedCard.host.name}
                 </span>
-                <span className="offer__user-status">
+                {
+                  selectedCard.host.isPro && <span className="offer__user-status">
                   Pro
                 </span>
+                }
+
               </div>
               <div className="offer__description">
                 <p className="offer__text">
-                  A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                </p>
-                <p className="offer__text">
-                  An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                  {selectedCard.description}
                 </p>
               </div>
             </div>
             <section className="offer__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{selectedCardReviews.length}</span></h2>
               <ul className="reviews__list">
-                <li className="reviews__item">
-                  <div className="reviews__user user">
-                    <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                      <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
-                    </div>
-                    <span className="reviews__user-name">
-                      Max
-                    </span>
-                  </div>
-                  <div className="reviews__info">
-                    <div className="reviews__rating rating">
-                      <div className="reviews__stars rating__stars">
-                        <span style={{width: '80%'}}></span>
-                        <span className="visually-hidden">Rating</span>
+                {
+                  selectedCardReviews.map((review) => (
+                    <li className="reviews__item" key={review.user.id}>
+                      <div className="reviews__user user">
+                        <div className="reviews__avatar-wrapper user__avatar-wrapper">
+                          <img className="reviews__avatar user__avatar" src={review.user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
+                        </div>
+                        <span className="reviews__user-name">
+                          {review.user.name}
+                        </span>
                       </div>
-                    </div>
-                    <p className="reviews__text">
-                      A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                    </p>
-                    <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                  </div>
-                </li>
+                      <div className="reviews__info">
+                        <div className="reviews__rating rating">
+                          <div className="reviews__stars rating__stars">
+                            <span style={{width: '80%'}}></span>
+                            <span className="visually-hidden">Rating</span>
+                          </div>
+                        </div>
+                        <p className="reviews__text">
+                          {review.comment}
+                        </p>
+                        <time className="reviews__time" dateTime={review.date.split('T')[0]}>{review.date}</time>
+                      </div>
+                    </li>
+                  ))
+                }
               </ul>
               <form className="reviews__form form" action="#" method="post">
                 <label className="reviews__label form__label" htmlFor="review">Your review</label>
