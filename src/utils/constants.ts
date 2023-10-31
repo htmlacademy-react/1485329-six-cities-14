@@ -9,3 +9,5 @@ export const AppRoute = {
   Favorities: '/favorities',
   Offer: '/offer/:id'
 } as const;
+
+export const handleStars = (width: number) => `${String(Math.round(width * 20)) }%`;

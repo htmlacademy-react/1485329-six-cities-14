@@ -7,7 +7,7 @@ export type OfferType = {
       zoom: number;
     };
     name: string;
-  }
+  };
   description: string;
   goods: string[];
   host: {

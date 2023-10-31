@@ -23,8 +23,8 @@ function App ({placesCount, offers, reviews}: AppProps): JSX.Element {
         <Route path={AppRoute.Main} element={<Main placesCount={placesCount} offers={offers}/>} />
         <Route path={AppRoute.Login} element={<Login />} />
         <Route path={AppRoute.Favorities} element={
-          <PrivateRoute authStatus={'NO_AUTH'} >
-            <Favorities />
+          <PrivateRoute authStatus={'AUTH'} >
+            <Favorities offers={offers} />
           </PrivateRoute>
         }
         />
