@@ -65,7 +65,7 @@ function Main ({placesCount, offers}: MainProps): JSX.Element {
               <CardsList offers={offers} setCardHoverId={setCardHoverId}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map" >{сardHoverId}</section>
             </div>
           </div>
         </div>
