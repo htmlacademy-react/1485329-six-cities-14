@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { OffersArrayType } from '../types/offer';
+import { OfferCity, OffersArrayType } from '../types/offer';
 import CardsList from '../components/CardsList';
 import SortForm from '../components/SortForm';
 import Header from '../components/Header';
+import Map from '../components/Map';
 
 type MainProps = {
   placesCount: number;
   offers: OffersArrayType;
+  city: OfferCity;
 };
 
-function Main ({placesCount, offers}: MainProps): JSX.Element {
+function Main ({placesCount, offers, city}: MainProps): JSX.Element {
 
   const [сardHoverId, setCardHoverId] = useState<number | null>(null);
 
@@ -24,7 +26,7 @@ function Main ({placesCount, offers}: MainProps): JSX.Element {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               <li className="locations__item">
-                <a className={'locations__item-link tabs__item tabs__item--active'} href="#">
+                <a className={'locations__item-link tabs__item'} href="#">
                   <span>Paris</span>
                 </a>
               </li>
@@ -39,7 +41,7 @@ function Main ({placesCount, offers}: MainProps): JSX.Element {
                 </a>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <a className="locations__item-link tabs__item tabs__item--active" href="#">
                   <span>Amsterdam</span>
                 </a>
               </li>
@@ -60,12 +62,12 @@ function Main ({placesCount, offers}: MainProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+              <b className="places__found">{placesCount} places to stay in {city.name}</b>
               <SortForm />
               <CardsList offers={offers} setCardHoverId={setCardHoverId}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" >{сardHoverId}</section>
+              <Map offers={offers} city={city} сardHoverId={сardHoverId}/>
             </div>
           </div>
         </div>
