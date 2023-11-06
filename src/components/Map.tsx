@@ -8,7 +8,7 @@ import { OfferCity, OffersArrayType } from '../types/offer';
 type MapProps = {
   offers: OffersArrayType;
   city: OfferCity;
-  сardHoverId: number | null;
+  сardHoverId?: number | null;
 };
 
 function Map (props: MapProps): JSX.Element {

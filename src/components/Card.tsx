@@ -4,6 +4,7 @@ import { OfferType } from '../types/offer';
 import { handleStars } from '../utils/constants';
 
 type CardProps = {
+  cardType: 'mainScreen' | 'offerScreen';
   card: OfferType;
   setCardHoverId(id: number | null): void;
 }
@@ -23,6 +24,15 @@ function Card ({ card, setCardHoverId }: CardProps): JSX.Element {
   const handleMouseOut = () => {
     setCardHoverId(null);
   };
+
+  const cardTypeSettings = {
+    mainScreen: {
+      className: 'cities'
+    },
+    offerScreen: {
+      className: 'near-places'
+    }
+  }
 
   return (
 
