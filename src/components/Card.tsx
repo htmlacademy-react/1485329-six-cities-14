@@ -33,9 +33,7 @@ function Card ({ card, setCardHoverId }: CardProps): JSX.Element {
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
 
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`offer/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
-        </Link>
+        <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -56,8 +54,9 @@ function Card ({ card, setCardHoverId }: CardProps): JSX.Element {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
+
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
