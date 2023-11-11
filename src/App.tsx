@@ -6,21 +6,22 @@ import Offer from './pages/Offer';
 import NoMatch from './pages/NoMatch';
 import { AppRoute } from './utils/constants';
 import PrivateRoute from './routes/PrivateRoute';
-import { OffersArrayType } from './types/offer';
+import { OffersArrayType, OfferCity } from './types/offer';
 import { ReviewsArrayType } from './types/review';
 
 type AppProps = {
   placesCount: number;
   offers: OffersArrayType;
   reviews: ReviewsArrayType;
+  city: OfferCity;
 }
 
-function App ({placesCount, offers, reviews}: AppProps): JSX.Element {
+function App ({placesCount, offers, reviews, city}: AppProps): JSX.Element {
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<Main placesCount={placesCount} offers={offers}/>} />
+        <Route path={AppRoute.Main} element={<Main placesCount={placesCount} offers={offers} city={city}/>} />
         <Route path={AppRoute.Login} element={<Login />} />
         <Route path={AppRoute.Favorities} element={
           <PrivateRoute authStatus={'AUTH'} >
