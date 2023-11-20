@@ -29,7 +29,7 @@ function App ({placesCount, offers, reviews, city}: AppProps): JSX.Element {
           </PrivateRoute>
         }
         />
-        <Route path={AppRoute.Offer} element={<Offer offers={offers} reviews={reviews}/>} />
+        <Route path={AppRoute.Offer} element={<Offer offers={offers} reviews={reviews} city={city}/>} />
 
         <Route path="*" element={<NoMatch />} />
       </Routes>

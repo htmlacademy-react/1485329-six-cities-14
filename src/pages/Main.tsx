@@ -64,10 +64,10 @@ function Main ({placesCount, offers, city}: MainProps): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{placesCount} places to stay in {city.name}</b>
               <SortForm />
-              <CardsList offers={offers} setCardHoverId={setCardHoverId}/>
+              <CardsList offers={offers} setCardHoverId={setCardHoverId} cardType={'mainScreen'} cardsListType={'mainScreen'}/>
             </section>
             <div className="cities__right-section">
-              <Map offers={offers} city={city} сardHoverId={сardHoverId}/>
+              <Map offers={offers} city={city} сardHoverId={сardHoverId} mapType={'mainScreen'}/>
             </div>
           </div>
         </div>
