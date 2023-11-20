@@ -1,10 +1,10 @@
 import { OfferCity } from '../types/offer';
 
 export const city: OfferCity = {
-  'name': 'Amsterdam',
+  'name': 'Paris',
   'location': {
-    'latitude': 52.377956,
-    'longitude': 4.897070,
+    'latitude': 48.864716,
+    'longitude': 2.349014,
     'zoom': 12,
   }
 };

@@ -4,16 +4,29 @@ import CardsList from '../components/CardsList';
 import SortForm from '../components/SortForm';
 import Header from '../components/Header';
 import Map from '../components/Map';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import {changeCity, filteredOffersByCity} from '../store/reducers/MainCardsSlice';
+import { NavLink } from 'react-router-dom';
+import MainEmpty from '../components/MainEmpty';
 
 type MainProps = {
-  placesCount: number;
   offers: OffersArrayType;
   city: OfferCity;
 };
 
-function Main ({placesCount, offers, city}: MainProps): JSX.Element {
+function Main ({offers, city}: MainProps): JSX.Element {
+  const dispatch = useAppDispatch();
 
   const [сardHoverId, setCardHoverId] = useState<number | null>(null);
+
+  const filtredOffersArray = useAppSelector(state => state.mainCards.filtredOffers);
+  const selectedCity = useAppSelector(state => state.mainCards.city.name);
+  const selectedCityObj = useAppSelector(state => state.mainCards.city);
+
+  const handleChangeCity = (event) => {
+    dispatch(changeCity(event.currentTarget.getAttribute('data-link-name')))
+    dispatch(filteredOffersByCity(event.currentTarget.getAttribute('data-link-name')))
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -26,50 +39,54 @@ function Main ({placesCount, offers, city}: MainProps): JSX.Element {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               <li className="locations__item">
-                <a className={'locations__item-link tabs__item'} href="#">
+                <NavLink className={isActive => "locations__item-link " + (isActive ? "tabs__item" : "tabs__item--active")} to={'/'}data-link-name="Paris" onClick={handleChangeCity}>
                   <span>Paris</span>
-                </a>
+                </NavLink>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <NavLink className={isActive => "locations__item-link " + (isActive ? "tabs__item" : "tabs__item--active")} to={'/'}data-link-name='Cologne' onClick={handleChangeCity}>
                   <span>Cologne</span>
-                </a>
+                </NavLink>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <NavLink className={isActive => "locations__item-link " + (isActive ? "tabs__item" : "tabs__item--active")} to={'/'}data-link-name='Brussels' onClick={handleChangeCity}>
                   <span>Brussels</span>
-                </a>
+                </NavLink>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="#">
+                <NavLink className={isActive => "locations__item-link " + (isActive ? "tabs__item" : "tabs__item--active")} to={'/'}data-link-name='Amsterdam' onClick={handleChangeCity}>
                   <span>Amsterdam</span>
-                </a>
+                </NavLink>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <NavLink className={isActive => "locations__item-link " + (isActive ? "tabs__item" : "tabs__item--active")} to={'/'}data-link-name='Hamburg' onClick={handleChangeCity}>
                   <span>Hamburg</span>
-                </a>
+                </NavLink>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <NavLink className={isActive => "locations__item-link " + (isActive ? "tabs__item" : "tabs__item--active")} to={'/'}data-link-name='Dusseldorf' onClick={handleChangeCity}>
                   <span>Dusseldorf</span>
-                </a>
+                </NavLink>
               </li>
             </ul>
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in {city.name}</b>
-              <SortForm />
-              <CardsList offers={offers} setCardHoverId={setCardHoverId} cardType={'mainScreen'} cardsListType={'mainScreen'}/>
-            </section>
-            <div className="cities__right-section">
-              <Map offers={offers} city={city} сardHoverId={сardHoverId} mapType={'mainScreen'}/>
+          {filtredOffersArray.length > 0 &&
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{filtredOffersArray.length} {filtredOffersArray.length > 1 ? 'places' : 'place'}  to stay in {selectedCity}</b>
+                <SortForm />
+                <CardsList offers={filtredOffersArray} setCardHoverId={setCardHoverId} cardType={'mainScreen'} cardsListType={'mainScreen'}/>
+              </section>
+              <div className="cities__right-section">
+                <Map offers={filtredOffersArray} city={selectedCityObj} сardHoverId={сardHoverId} mapType={'mainScreen'}/>
+              </div>
             </div>
-          </div>
+          }
+
+          {!filtredOffersArray && <MainEmpty />}
         </div>
       </main>
     </div>
