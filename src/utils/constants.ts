@@ -23,7 +23,7 @@ export const cardTypeSettings = {
   offerScreen: {
     className: 'near-places'
   }
-}
+};
 
 export const cardsListTypeSettings = {
   mainScreen: {
@@ -32,7 +32,7 @@ export const cardsListTypeSettings = {
   offerScreen: {
     className: 'near-places__list'
   }
-}
+};
 
 export const mapTypeSettings = {
   mainScreen: {
@@ -41,4 +41,4 @@ export const mapTypeSettings = {
   offerScreen: {
     className: 'offer'
   }
-}
+};

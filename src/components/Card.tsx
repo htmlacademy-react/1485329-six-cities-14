@@ -1,8 +1,6 @@
-// import { MouseEvent } from "react";
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { OfferType } from '../types/offer';
 import { cardTypeSettings, handleStars } from '../utils/constants';
-import { useState } from 'react';
 
 type CardProps = {
   cardType: 'mainScreen' | 'offerScreen';
@@ -15,17 +13,6 @@ function Card ({ card, setCardHoverId, cardType }: CardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, title, type, id, rating } = card;
 
   const isFavoriteActive = `place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : ''}`;
-
-  // const [сardHoverId, setCardHoverId] = useState({cardId: ''});
-
-
-  // const [isCardTypeMainScreen, setCardTypeMainScreen] = useState(cardType)
-
-  // console.log(isCardTypeMainScreen)
-
-  // console.log()
-
-  const linkToOffer = cardType === 'mainScreen' ? `offer/${id}` : `${id}`
 
   const handleMouseOver = () => {
     setCardHoverId(id);
@@ -44,7 +31,7 @@ function Card ({ card, setCardHoverId, cardType }: CardProps): JSX.Element {
 
       <div className={`${cardTypeSettings[cardType].className}__image-wrapper place-card__image-wrapper`}>
 
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
+        <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
 
       </div>
       <div className="place-card__info">
@@ -67,7 +54,7 @@ function Card ({ card, setCardHoverId, cardType }: CardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-        <Link to={`offer/${id}`}>{title}</Link>
+          <Link to={`offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

@@ -1,5 +1,5 @@
-import { ReviewsArrayType } from "../types/review";
-import Review from "./Review";
+import { ReviewsArrayType } from '../types/review';
+import Review from './Review';
 
 type ReviewsListProps = {
   selectedCardReviews: ReviewsArrayType;
@@ -13,8 +13,8 @@ function ReviewsList({selectedCardReviews}: ReviewsListProps): JSX.Element {
           <Review key={review.user.id} review={review}/>
         ))
       }
-  </ul>
-  )
+    </ul>
+  );
 }
 
 export default ReviewsList;

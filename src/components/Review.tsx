@@ -1,4 +1,4 @@
-import { ReviewType } from "../types/review";
+import { ReviewType } from '../types/review';
 
 type ReviewProps = {
   review: ReviewType;
@@ -29,7 +29,7 @@ function Review({review}: ReviewProps): JSX.Element {
         <time className="reviews__time" dateTime={review.date.split('T')[0]}>{review.date}</time>
       </div>
     </li>
-  )
+  );
 
 }
 

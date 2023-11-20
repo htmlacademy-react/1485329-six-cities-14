@@ -12,7 +12,6 @@ type CardsListProps = {
 function CardsList ({offers, setCardHoverId, cardType, cardsListType}: CardsListProps): JSX.Element {
 
 
-
   return (
     <div className={`${cardsListTypeSettings[cardsListType].className} places__list`}>
       {

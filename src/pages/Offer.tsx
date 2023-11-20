@@ -21,7 +21,7 @@ function Offer ({offers, reviews, city}: OfferProps): JSX.Element {
 
   const selectedCard = offers.filter((item) => item.id === cardId)[0];
 
-  const recommendOffers = offers.slice(0,3)
+  const recommendOffers = offers.slice(0,3);
 
   const [сardHoverId, setCardHoverId] = useState<number | null>(null);
 
