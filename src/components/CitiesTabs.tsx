@@ -2,6 +2,8 @@ import { Fragment } from 'react';
 import { cities } from '../mocks/cities';
 import { useAppDispatch } from '../hooks/reducer';
 import { changeCity } from '../store/actions';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../utils/constants';
 
 type CitiesTabsProps = {
   cityName: string;
@@ -19,9 +21,9 @@ function CitiesTabs ({cityName}: CitiesTabsProps): JSX.Element {
             cities.map((item) => (
               <Fragment key={item.name}>
                 <li className="locations__item">
-                  <a className={`locations__item-link tabs__item ${item.name === cityName ? 'tabs__item--active' : ''}`} href="#" onClick={() => dispatch(changeCity(item.name))}>
+                  <Link className={`locations__item-link tabs__item ${item.name === cityName ? 'tabs__item--active' : ''}`} to={AppRoute.Main} onClick={() => dispatch(changeCity(item.name))}>
                     <span>{item.name}</span>
-                  </a>
+                  </Link>
                 </li>
               </Fragment>
             ))

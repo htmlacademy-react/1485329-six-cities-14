@@ -46,7 +46,7 @@ function Main (): JSX.Element {
               <CardsList offers={offersFiltredByCity} setCardHoverId={setCardHoverId} cardType={'mainScreen'} cardsListType={'mainScreen'}/>
             </section>
             <div className="cities__right-section">
-              <Map offers={offersFiltredByCity} city={selectedCity} сardHoverId={сardHoverId} mapType={'mainScreen'}/>
+              <Map offers={offersFiltredByCity} city={selectedCity!} сardHoverId={сardHoverId} mapType={'mainScreen'}/>
             </div>
           </div>
         </div>}
