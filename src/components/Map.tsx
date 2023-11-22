@@ -12,7 +12,8 @@ type MapProps = {
   mapType: 'mainScreen' | 'offerScreen';
 };
 
-function Map ({offers, city, сardHoverId, mapType }: MapProps): JSX.Element {
+function Map (props: MapProps): JSX.Element {
+  const { offers, city, сardHoverId, mapType } = props;
 
   const mapRef = useRef(null);
 

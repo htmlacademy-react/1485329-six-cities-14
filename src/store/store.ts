@@ -1,14 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
+import {reducer} from './reducers';
 
-import mainCardsReducer from './reducers/MainCardsSlice';
-
-const rootReducer = combineReducers({
-  mainCards: mainCardsReducer,
-});
-
-export const setupStore = configureStore({
-    reducer: rootReducer,
-  })
-
-export type RootState = ReturnType<typeof setupStore.getState>
-export type AppDispatch = typeof setupStore.dispatch
+export const store = configureStore({reducer});
