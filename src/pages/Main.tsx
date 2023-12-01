@@ -1,19 +1,27 @@
 import { useState } from 'react';
-import { OfferCity, OffersArrayType } from '../types/offer';
 import CardsList from '../components/CardsList';
 import SortForm from '../components/SortForm';
 import Header from '../components/Header';
 import Map from '../components/Map';
+import { useAppSelector } from '../hooks/reducer';
+import CitiesTabs from '../components/CitiesTabs';
+import MainListEmpty from '../components/MainListEmpty';
+import { cities } from '../mocks/cities';
 
-type MainProps = {
-  placesCount: number;
-  offers: OffersArrayType;
-  city: OfferCity;
-};
 
-function Main ({placesCount, offers, city}: MainProps): JSX.Element {
+function Main (): JSX.Element {
 
   const [сardHoverId, setCardHoverId] = useState<number | null>(null);
+
+  const cityName = useAppSelector((state) => state.city);
+
+  const allOffers = useAppSelector((state) => state.offers);
+
+  // Фильтрация по городу из стора
+  const offersFiltredByCity = allOffers.filter((item) => item.city.name === cityName);
+
+  // Поиск объекта города из моков по значению из стора
+  const selectedCity = cities.find((item) => item.name === cityName);
 
   return (
     <div className="page page--gray page--main">
@@ -22,55 +30,27 @@ function Main ({placesCount, offers, city}: MainProps): JSX.Element {
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className={'locations__item-link tabs__item'} href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="#">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+
+        <CitiesTabs cityName={cityName}/>
+
+        {!offersFiltredByCity && <MainListEmpty />}
+
+        {offersFiltredByCity.length > 0 &&
+
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in {city.name}</b>
+              <b className="places__found">{offersFiltredByCity.length} {offersFiltredByCity.length > 1 ? 'places' : 'place'}  to stay in {cityName}</b>
               <SortForm />
-              <CardsList offers={offers} setCardHoverId={setCardHoverId}/>
+              <CardsList offers={offersFiltredByCity} setCardHoverId={setCardHoverId} cardType={'mainScreen'} cardsListType={'mainScreen'}/>
             </section>
             <div className="cities__right-section">
-              <Map offers={offers} city={city} сardHoverId={сardHoverId}/>
+              <Map offers={offersFiltredByCity} city={selectedCity!} сardHoverId={сardHoverId} mapType={'mainScreen'}/>
             </div>
           </div>
-        </div>
+        </div>}
+
       </main>
     </div>
   );

@@ -1,20 +1,18 @@
-// import { MouseEvent } from "react";
 import { Link } from 'react-router-dom';
 import { OfferType } from '../types/offer';
-import { handleStars } from '../utils/constants';
+import { cardTypeSettings, handleStars } from '../utils/constants';
 
 type CardProps = {
+  cardType: 'mainScreen' | 'offerScreen';
   card: OfferType;
   setCardHoverId(id: number | null): void;
 }
 
-function Card ({ card, setCardHoverId }: CardProps): JSX.Element {
+function Card ({ card, setCardHoverId, cardType }: CardProps): JSX.Element {
 
   const {isPremium, isFavorite, previewImage, price, title, type, id, rating } = card;
 
   const isFavoriteActive = `place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : ''}`;
-
-  // const [сardHoverId, setCardHoverId] = useState({cardId: ''});
 
   const handleMouseOver = () => {
     setCardHoverId(id);
@@ -25,15 +23,16 @@ function Card ({ card, setCardHoverId }: CardProps): JSX.Element {
   };
 
   return (
-
-    <article className="cities__card place-card"
+    <article className={`${cardTypeSettings[cardType].className}__card place-card`}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
 
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${cardTypeSettings[cardType].className}__image-wrapper place-card__image-wrapper`}>
+
         <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
+
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -54,7 +53,6 @@ function Card ({ card, setCardHoverId }: CardProps): JSX.Element {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-
         <h2 className="place-card__name">
           <Link to={`offer/${id}`}>{title}</Link>
         </h2>

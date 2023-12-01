@@ -2,17 +2,18 @@ import { useEffect, useRef } from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../hooks/useMap';
-import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../utils/constants';
+import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT, mapTypeSettings } from '../utils/constants';
 import { OfferCity, OffersArrayType } from '../types/offer';
 
 type MapProps = {
   offers: OffersArrayType;
   city: OfferCity;
   сardHoverId: number | null;
+  mapType: 'mainScreen' | 'offerScreen';
 };
 
 function Map (props: MapProps): JSX.Element {
-  const { offers, city, сardHoverId } = props;
+  const { offers, city, сardHoverId, mapType } = props;
 
   const mapRef = useRef(null);
 
@@ -48,7 +49,8 @@ function Map (props: MapProps): JSX.Element {
   }, [map, city, сardHoverId]);
 
   return (
-    <section className="cities__map map" ref={mapRef} > </section>
+
+    <section className={`${mapTypeSettings[mapType].className}__map map`} ref={mapRef} > </section>
   );
 }
 
